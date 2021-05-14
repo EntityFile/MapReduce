@@ -1,9 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <thread>
-#include <mutex>
-#include <deque>
-#include <condition_variable>
 #include <chrono>
 #include "map_reduce.cpp"
 
@@ -22,26 +18,20 @@ inline long long to_us(const D& d)
 }
 
 
-std::string map1(std::string element) {
+std::string mapFunction(std::string element) {
     return element+element;
 }
 
-int test(std::string a) {
+int reduceFunction(std::string a) {
     return a.size();
 }
 
 int main() {
-    std::vector<std::string> data;
-
-    // fill data
-    data.reserve(1000000);
-
-    for (int i = 0; i < 1000000; i++) {
-        data.emplace_back("testing");
-    }
+    /*
 
     auto start1 = get_current_time_fenced();
-    int s = mapReduce(data, map1, test, true);
+
+    int s = mapReduce(data, map1, test);
     auto stop1 = get_current_time_fenced();
     auto duration1 = stop1 - start1;
 
@@ -54,7 +44,21 @@ int main() {
     auto duration2 = stop2 - start2;
 
     std::cout << s << ' ' << to_us(duration1) << std::endl;
-    std::cout << s2 << ' ' << to_us(duration2) << std::endl;
+     */
+
+    std::vector<std::string> data;
+
+    // fill data with strings
+    data.reserve(1000000);
+
+    for (int i = 0; i < 1000000; i++) {
+        data.emplace_back("testing");
+    }
+
+    int res = mapReduce(data, mapFunction, reduceFunction, true);
+
+    std::cout << "Result: " << res << std::endl;
+
     return 0;
 }
 

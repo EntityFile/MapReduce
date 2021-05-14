@@ -141,6 +141,7 @@ void reduceDefault(std::vector<T> &data, int start, int end, std::vector<T> &fin
     std::vector<T> result;
 
     for (int i = start; i < end; i++) {
+        // can be modified here
         result.template emplace_back(data[i]);
     }
 
@@ -207,7 +208,7 @@ std::vector<T> mapReduce(std::vector<T> dataSet, T (*f)(T)) {
     for (int j = 0; j < mappingThreads; j++) {
         v[j].join();
     }
-
+    /*
     for (int a = 0; a < reducingThreads; a++) {
         int start2 = sizePerThread2 * a;
         int end2;
@@ -224,8 +225,9 @@ std::vector<T> mapReduce(std::vector<T> dataSet, T (*f)(T)) {
     for (int k = mappingThreads; k < reducingThreads + mappingThreads; k++) {
         v[k].join();
     }
+     */
 
-    return finalResult;
+    return dataSet;
 }
 
 template<typename T, typename K>
@@ -273,7 +275,6 @@ K mapReduce(std::vector<T> dataSet, T (*f)(T), K (*f2)(T), bool useQueue = false
             }
             v.template emplace_back(reduceValuesWithoutQueue<T, K>, std::ref(dataSet), start2, end2, f2, std::ref(finalResult), std::ref(m));
         }
-
 
         for (int k = mappingThreads; k < reducingThreads + mappingThreads; k++) {
             v[k].join();
