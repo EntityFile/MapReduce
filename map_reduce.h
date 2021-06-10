@@ -38,7 +38,7 @@ template<typename T, typename K>
 void reduceValuesUsingQueue(Queue<std::vector<T>> &mergingQueue, K (*f)(T), K &finalResult, std::mutex &m);
 
 template<typename T>
-T defaultSum (T a, T b)
+T defaultSum (T a, T b);
 
 template<typename T>
 std::vector<T> mapReduce(std::vector<T> dataSet, T (*f)(T));
