@@ -201,8 +201,8 @@ void mapReduceTBB(std::vector<T> *dataSet, T (*f)(T)) {
 }
 
 template<typename T>
-void mapReduceOpenMP(std::vector<T> *dataSet, T (*f)(T)) {
-    #pragma omp parallel num_threads(4)
+void mapReduceOpenMP(std::vector<T> *dataSet, T (*f)(T), int mappingThreads = 2) {
+    #pragma omp parallel num_threads(mappingThreads)
         for (int i=0; i<dataSet->size(); ++i)
         {
             dataSet->at(i) = f(dataSet->at(i));

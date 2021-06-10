@@ -46,9 +46,9 @@ int main() {
         data2.push_back(data[i]);
     auto start1 = get_current_time_fenced();
 
-    int result = mapReduceTBB(&data, mapFunction, reduceFunction);
+    mapReduceOpenMP(&data, mapFunction, 3);
 
-    std::cout << "r1 " << result << std::endl;
+    // std::cout << "r1 " << result << std::endl;
 
 
 //    int thr = 2;
@@ -70,13 +70,17 @@ int main() {
     auto duration1 = stop1 - start1;
 
     auto start2 = get_current_time_fenced();
+
     for (int i = 0; i < 1000000; i++) {
         data2[i] = mapFunction(data2[i]);
     }
+
     int r = 0;
+
     for (int k = 0; k < 1000000; k++) {
         r += reduceFunction(data2[k]);
     }
+
     auto stop2 = get_current_time_fenced();
     auto duration2 = stop2 - start2;
 
